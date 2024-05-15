@@ -1,22 +1,14 @@
-function mergeSort(arr) {
-  if (arr.length <= 1) return arr;
-  const mid = Math.floor(arr.length / 2);
-  const left = mergeSort(arr.slice(0, mid));
-  const right = mergeSort(arr.slice(mid));
-  return merge(left, right);
-}
-function merge(left, right) {
-  let result = [];
-  let leftIndex = 0;
-  let rightIndex = 0;
-  while (leftIndex < left.length && rightIndex < right.length) {
-    if (left[leftIndex] < right[rightIndex]) {
-      result.push(left[leftIndex]);
-      leftIndex++;
-    } else {
-      result.push(right[rightIndex]);
-      rightIndex++;
+function connect(root) {
+  if (!root) return root;
+  let levelStart = root;
+  while (levelStart) {
+    let curr = levelStart;
+    while (curr) {
+      if (curr.left) curr.left.next = curr.right;
+      if (curr.right && curr.next) curr.right.next = curr.next.left;
+      curr = curr.next;
     }
+    levelStart = levelStart.left;
   }
-  return result.concat(left.slice(leftIndex)).concat(right.slice(rightIndex));
+  return root;
 }
